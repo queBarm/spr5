@@ -1,6 +1,7 @@
 package spentenergy
 
 import (
+	"errors"
 	"time"
 )
 
@@ -13,17 +14,98 @@ const (
 )
 
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
+
+	//Валидируем входные параметры
+	if steps <= 0 {
+		return 0, errors.New("WalkingSpentCalories: steps must be greater than 0")
+	}
+	if weight <= 0 {
+		return 0, errors.New("WalkingSpentCalories: weight must be greater than 0")
+	}
+	if height <= 0 {
+		return 0, errors.New("WalkingSpentCalories: height must be greater than 0")
+	}
+	if duration <= 0 {
+		return 0, errors.New("WalkingSpentCalories: duration must be greater than 0")
+	}
+
+	//Получаем среднюю скорость
+	speed := MeanSpeed(steps, height, duration)
+
+	//Переводим в минуты
+	minutes := duration.Minutes()
+
+	//Считаем калории
+	calories := (weight * speed * minutes) / minInH
+
+	//Коэф хотьбы
+	calories *= walkingCaloriesCoefficient
+
+	//Возвращаем каолрии
+	return calories, nil
 }
 
 func RunningSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
-	// TODO: реализовать функцию
+
+	//Валидируем входные параметры
+	if steps <= 0 {
+		return 0, errors.New("RunningSpentCalories: steps must be greater than 0")
+	}
+	if weight <= 0 {
+		return 0, errors.New("RunningSpentCalories: weight must be greater than 0")
+	}
+	if height <= 0 {
+		return 0, errors.New("RunningSpentCalories: height must be greater than 0")
+	}
+	if duration <= 0 {
+		return 0, errors.New("RunningSpentCalories: duration must be greater than 0")
+	}
+
+	//Получаем среднюю скорость
+	speed := MeanSpeed(steps, height, duration)
+
+	//Получаем длительность в минутах
+	minutes := duration.Minutes()
+
+	//Считаем калории
+	calories := (weight * speed * minutes) / minInH
+
+	//Возвращаем каллории
+	return calories, nil
 }
 
 func MeanSpeed(steps int, height float64, duration time.Duration) float64 {
-	// TODO: реализовать функцию
+
+	//Проверяем на отрицательные шаги и длительность
+	if steps < 0 || duration <= 0 {
+		return 0
+	}
+
+	//Дистанция в км
+	distance := Distance(steps, height)
+
+	//Переводи длительность в часы
+	hours := duration.Hours()
+
+	//Средняя скорость км/ч
+	speed := distance / hours
+
+	//Возвращаем среднюю скорость
+	return speed
+
 }
 
 func Distance(steps int, height float64) float64 {
-	// TODO: реализовать функцию
+
+	//Длина одного шага
+	stepLength := height * stepLengthCoefficient
+
+	//Дистанция в метрах
+	distanceInMeters := float64(steps) * stepLength
+
+	//Переводим в км
+	distanceInKm := distanceInMeters / mInKm
+
+	//Возвращаем дистанцию в км
+	return distanceInKm
 }
