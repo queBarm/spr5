@@ -21,31 +21,31 @@ type Training struct {
 func (t *Training) Parse(datastring string) (err error) {
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 3 {
-		return errors.New("Parse: wrong format !=3")
+		return errors.New("parse: wrong format !=3")
 	}
 	//Парсим шаги
 	steps, err := strconv.Atoi(strings.TrimSpace(parts[0]))
 	if err != nil {
-		return errors.New("Parsing: wrong steps count: " + err.Error())
+		return err
 	}
 	if steps <= 0 {
-		return errors.New("Parsing: steps <= 0")
+		return errors.New("parsing: steps <= 0")
 	}
 	t.Steps = steps
 
 	//Парсим тип
 	t.TrainingType = strings.TrimSpace(parts[1])
 	if t.TrainingType == "" {
-		return errors.New("Parsing: empty training type")
+		return errors.New("parsing: empty training type")
 	}
 
 	//Парсим длительность
 	duration, err := time.ParseDuration(strings.TrimSpace(parts[2]))
 	if err != nil {
-		return errors.New("Parsing: wrong duration: " + err.Error())
+		return err
 	}
 	if duration <= 0 {
-		return errors.New("Parsing: duration <= 0")
+		return errors.New("parsing: duration <= 0")
 	}
 	t.Duration = duration
 
@@ -56,10 +56,10 @@ func (t *Training) Parse(datastring string) (err error) {
 func (t Training) ActionInfo() (string, error) {
 	//Валидация
 	if t.Duration <= 0 {
-		return "", errors.New("Parse: duration must be greates than 0")
+		return "", errors.New("parse: duration must be greates than 0")
 	}
 	if t.Steps <= 0 {
-		return "", errors.New("Parse: steps count must be greatest then 0")
+		return "", errors.New("parse: steps count must be greatest then 0")
 	}
 
 	//Получаем дистанцию и скорость

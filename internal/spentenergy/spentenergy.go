@@ -17,16 +17,16 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 
 	//Валидируем входные параметры
 	if steps <= 0 {
-		return 0, errors.New("WalkingSpentCalories: steps must be greater than 0")
+		return 0, errors.New("walkingSpentCalories: steps must be greater than 0")
 	}
 	if weight <= 0 {
-		return 0, errors.New("WalkingSpentCalories: weight must be greater than 0")
+		return 0, errors.New("walkingSpentCalories: weight must be greater than 0")
 	}
 	if height <= 0 {
-		return 0, errors.New("WalkingSpentCalories: height must be greater than 0")
+		return 0, errors.New("walkingSpentCalories: height must be greater than 0")
 	}
 	if duration <= 0 {
-		return 0, errors.New("WalkingSpentCalories: duration must be greater than 0")
+		return 0, errors.New("walkingSpentCalories: duration must be greater than 0")
 	}
 
 	//Получаем среднюю скорость
@@ -49,16 +49,16 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 
 	//Валидируем входные параметры
 	if steps <= 0 {
-		return 0, errors.New("RunningSpentCalories: steps must be greater than 0")
+		return 0, errors.New("runningSpentCalories: steps must be greater than 0")
 	}
 	if weight <= 0 {
-		return 0, errors.New("RunningSpentCalories: weight must be greater than 0")
+		return 0, errors.New("runningSpentCalories: weight must be greater than 0")
 	}
 	if height <= 0 {
-		return 0, errors.New("RunningSpentCalories: height must be greater than 0")
+		return 0, errors.New("runningSpentCalories: height must be greater than 0")
 	}
 	if duration <= 0 {
-		return 0, errors.New("RunningSpentCalories: duration must be greater than 0")
+		return 0, errors.New("runningSpentCalories: duration must be greater than 0")
 	}
 
 	//Получаем среднюю скорость

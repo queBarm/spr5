@@ -20,7 +20,7 @@ type DaySteps struct {
 func (ds *DaySteps) Parse(datastring string) error {
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 2 {
-		return errors.New("неверный формат данных: ожидается 2 элемента, разделённые запятой")
+		return errors.New("wrong format: parts != 2")
 	}
 
 	stepStr := parts[0]
@@ -28,24 +28,24 @@ func (ds *DaySteps) Parse(datastring string) error {
 
 	// Проверяем наличие пробелов
 	if stepStr != strings.TrimSpace(stepStr) || durationStr != strings.TrimSpace(durationStr) {
-		return errors.New("вход содержит недопустимые пробелы")
+		return errors.New("wrong format: have space")
 	}
 
 	steps, err := strconv.Atoi(stepStr)
 	if err != nil {
-		return errors.New("не удалось преобразовать количество шагов в число")
+		return err
 	}
 	if steps <= 0 {
-		return errors.New("шаг <= 0")
+		return errors.New("steps <= 0")
 	}
 	ds.Steps = steps
 
 	duration, err := time.ParseDuration(durationStr)
 	if err != nil {
-		return errors.New("не удалось распарсить длительность")
+		return err
 	}
 	if duration <= 0 {
-		return errors.New("длительность <= 0")
+		return errors.New("duration <= 0")
 	}
 	ds.Duration = duration
 
